@@ -1,0 +1,23 @@
+import"../chunks/DsnmJJEf.js";import"../chunks/aTvzxYx7.js";import{a8 as t,a9 as e,aa as s,ab as r}from"../chunks/DhvMmYQQ.js";import{h as l}from"../chunks/DoHitF5k.js";var d=t('<link rel="stylesheet" href="https://dig.cmu.edu/datavis-fall-2024/assignments/report.css"/>'),h=t(`<header><h1><small>Assignment 1</small> Exploratory Data Analysis</h1> <p><strong>Alex Naglich</strong> — <em>anaglich@andrew.cmu.edu</em></p></header> <main><section><h2>Subtheme: Fentanyl</h2> <h3>Overall Analysis Questions</h3> <ol><li>How many cases include fentanyl? Does the addition of fent increase case numbers? This data
+				alone is insufficient for identifying if fentanyl usage is "deadlier", as I would need the
+				rates of consumption, not just those that results in death. But it would be valuable for
+				demonstrating the absolute severity of fentanyl and drive attention to it as a public issue-
+				for example, it would be a powerful statement if it were found that 60% of overall overdoses
+				contained fentanyl, or that 70% of cocaine overdoses included fentanyl. <br/><strong>Evidence:</strong> My bartender friend says that most cocaine that comes through
+				her bar has fent these days and she is getting really worried about coming into contact exposure
+				with it. Other evidence is that I know that it only takes an exceedingly small dose to be lethal,
+				and that many drugs are cut with fent to increase addiction for the benefit of the dealer. So
+				if the dosage provided isn't well calibrated, that can be lethal.</li> <li>I want to know what zip codes have the most fentanyl. <br/><strong>Evidence:</strong> I want to know this because I am EMT certified, and I want to know where in Allegheny the concentration
+				of fent is. I know that there are hotspots for drug usage, and I am curious.</li> <li>Are opioid OD rates, including fentanyl, YoY improving? Simple question, but I am curious.
+				With the widespread distribution of naloxone, and many people (me included) keeping one
+				nearby, I wonder. It would be interesting if lines for distribution programs correlated with
+				any drops seen? <br/><strong>Evidence:</strong> Aug 2024 Narcan vending machines were
+				installed (News sites differ on number, but 7 seems the most cited number prevalent. I
+				wonder if that's enough for an impact) (WESA). “Since 2021, Pennsylvania’s Overdose
+				Prevention Program has provided free Naloxone in bulk” (PittNews). Jan 2025 Pitt campus got
+				dispensers. (PittNews) This may connect in with the previous question. <br/> <strong>https://www.wesa.fm/health-science-tech/2024-08-01/narcan-naloxone-free-vending-machines-allegheny-county</strong><br/> <strong>https://pittnews.com/article/193311/news/pitt-installs-overdose-reversal-drug-dispensers-after-decade-long-push/</strong></li> <li>Backup observation, not intended for final inclusion but an observation I wanted to share: I
+				noticed you can OD on bupropion, which surprised me as I take that. It was recorded as an
+				accident and not a suicide attempt. That is interesting, but I chose a subtheme of fent, not
+				prescription antidepressants. I may be able to connect the combination of fentanyl with
+				prescription vs prescription if I require additional figures! I see benadryl there as well,
+				which I know is notoriously nasty to OD on</li></ol></section> <section><h2>Discoveries & Insights</h2></section> <section><h2>Summary</h2> <p>WRITE FINAL SUMMARY HERE.</p></section></main>`,1);function p(n){var a=h();l(i=>{var o=d();s.title="Data Vis Assignment 1",e(i,o)}),r(2),e(n,a)}export{p as component};
