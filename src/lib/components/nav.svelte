@@ -1,12 +1,13 @@
 <script>
 	let { color = 'blue' } = $props();
+	import { base } from '$app/paths';
 
 
   let routes = [
-    { name: 'Home', path: '/' },
-    { name: 'Contact', path: '/contact' },
+    { name: 'Home', path: `${base}/` },
+    { name: 'Contact', path: `${base}/contact` },
     { name: 'Github', path: 'https://github.com/Alex-Naglich-CMU' },
-    { name: 'A1', path: '/assignments/a1' },
+    { name: 'A1', path: `${base}/assignments/a1` },
   ];
 </script>
 
@@ -21,10 +22,10 @@
 		</ul>
 	</nav>
 
-	<a href="/" class="rounded-full bg-[rgba(0,0,139,0.4)] p-0.5" aria-label="Go to Homepage">
+	<a href={`${base}/`} class="rounded-full bg-[rgba(0,0,139,0.4)] p-0.5" aria-label="Go to Homepage">
 		<div class="relative h-16 w-16 overflow-hidden rounded-full">
 			<img
-				src="/Alex_Naglich_Face.png"
+				src={`${base}/Alex_Naglich_Face.png`}
 				alt="Home"
 				class="h-full w-full scale-[1.50] object-cover object-[1px_30%]"
 			/>

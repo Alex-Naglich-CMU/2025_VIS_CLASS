@@ -8,15 +8,12 @@ const config = {
 	preprocess: vitePreprocess(),
 	kit: {
 		adapter: adapter({
-			pages: 'docs', // Change this to 'docs' for GitHub Pages
-			assets: 'docs', // Change this to 'docs' for GitHub Pages
-			fallback: undefined,
-			precompress: false,
-			strict: true
+			// Set the output directory for GitHub Pages
+			pages: 'docs',
+			fallback: '404.html'
 		}),
-		// This is the key line for GitHub Pages
 		paths: {
-			base: process.env.NODE_ENV === 'production' ? '/your-repo-name' : ''
+			base: process.env.NODE_ENV === 'production' ? '/2025_VIS_CLASS' : ''
 		}
 	}
 };
