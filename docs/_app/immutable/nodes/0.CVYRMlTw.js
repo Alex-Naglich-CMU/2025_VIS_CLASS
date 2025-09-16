@@ -1,28 +1,4 @@
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		
-		<link rel="modulepreload" href="./_app/immutable/entry/start.Ddo3TewA.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/2W_P2SOB.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/D7GMsL1x.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/DhvMmYQQ.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/QO_QmZMb.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/DoHitF5k.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/Dg02FOK-.js">
-		<link rel="modulepreload" href="./_app/immutable/entry/app.pQZJqsxC.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/DsnmJJEf.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/BriMJmZ4.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/7nCCmVoj.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/BB5rYo4a.js">
-		<link rel="modulepreload" href="./_app/immutable/nodes/0.C1h806V8.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/BKUEan6T.js">
-		<link rel="modulepreload" href="./_app/immutable/nodes/3.BL_ZFIJV.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/aTvzxYx7.js"><!--[--><link rel="icon" href="data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20width='107'%20height='128'%20viewBox='0%200%20107%20128'%3e%3ctitle%3esvelte-logo%3c/title%3e%3cpath%20d='M94.157%2022.819c-10.4-14.885-30.94-19.297-45.792-9.835L22.282%2029.608A29.92%2029.92%200%200%200%208.764%2049.65a31.5%2031.5%200%200%200%203.108%2020.231%2030%2030%200%200%200-4.477%2011.183%2031.9%2031.9%200%200%200%205.448%2024.116c10.402%2014.887%2030.942%2019.297%2045.791%209.835l26.083-16.624A29.92%2029.92%200%200%200%2098.235%2078.35a31.53%2031.53%200%200%200-3.105-20.232%2030%2030%200%200%200%204.474-11.182%2031.88%2031.88%200%200%200-5.447-24.116'%20style='fill:%23ff3e00'/%3e%3cpath%20d='M45.817%20106.582a20.72%2020.72%200%200%201-22.237-8.243%2019.17%2019.17%200%200%201-3.277-14.503%2018%2018%200%200%201%20.624-2.435l.49-1.498%201.337.981a33.6%2033.6%200%200%200%2010.203%205.098l.97.294-.09.968a5.85%205.85%200%200%200%201.052%203.878%206.24%206.24%200%200%200%206.695%202.485%205.8%205.8%200%200%200%201.603-.704L69.27%2076.28a5.43%205.43%200%200%200%202.45-3.631%205.8%205.8%200%200%200-.987-4.371%206.24%206.24%200%200%200-6.698-2.487%205.7%205.7%200%200%200-1.6.704l-9.953%206.345a19%2019%200%200%201-5.296%202.326%2020.72%2020.72%200%200%201-22.237-8.243%2019.17%2019.17%200%200%201-3.277-14.502%2017.99%2017.99%200%200%201%208.13-12.052l26.081-16.623a19%2019%200%200%201%205.3-2.329%2020.72%2020.72%200%200%201%2022.237%208.243%2019.17%2019.17%200%200%201%203.277%2014.503%2018%2018%200%200%201-.624%202.435l-.49%201.498-1.337-.98a33.6%2033.6%200%200%200-10.203-5.1l-.97-.294.09-.968a5.86%205.86%200%200%200-1.052-3.878%206.24%206.24%200%200%200-6.696-2.485%205.8%205.8%200%200%200-1.602.704L37.73%2051.72a5.42%205.42%200%200%200-2.449%203.63%205.79%205.79%200%200%200%20.986%204.372%206.24%206.24%200%200%200%206.698%202.486%205.8%205.8%200%200%200%201.602-.704l9.952-6.342a19%2019%200%200%201%205.295-2.328%2020.72%2020.72%200%200%201%2022.237%208.242%2019.17%2019.17%200%200%201%203.277%2014.503%2018%2018%200%200%201-8.13%2012.053l-26.081%2016.622a19%2019%200%200%201-5.3%202.328'%20style='fill:%23fff'/%3e%3c/svg%3e"/><!--]-->
-	</head>
-	<body data-sveltekit-preload-data="hover">
-		<div style="display: contents"><!--[--><!--[--><!----><!--[--><style>@layer theme, base, components, utilities;
+import"../chunks/DsnmJJEf.js";import{aj as k,a8 as i,ai as g,a9 as r,ak as u,al as b,am as f,J as x}from"../chunks/DhvMmYQQ.js";import{h as w}from"../chunks/DoHitF5k.js";import{s as y}from"../chunks/Dg02FOK-.js";import{i as v}from"../chunks/BriMJmZ4.js";import{s as z}from"../chunks/BKUEan6T.js";import{s as S,a as C}from"../chunks/BB5rYo4a.js";import{s as R}from"../chunks/DnT2_pdT.js";const _=!0,B=Object.freeze(Object.defineProperty({__proto__:null,prerender:_},Symbol.toStringTag,{value:"Module"})),M="data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20width='107'%20height='128'%20viewBox='0%200%20107%20128'%3e%3ctitle%3esvelte-logo%3c/title%3e%3cpath%20d='M94.157%2022.819c-10.4-14.885-30.94-19.297-45.792-9.835L22.282%2029.608A29.92%2029.92%200%200%200%208.764%2049.65a31.5%2031.5%200%200%200%203.108%2020.231%2030%2030%200%200%200-4.477%2011.183%2031.9%2031.9%200%200%200%205.448%2024.116c10.402%2014.887%2030.942%2019.297%2045.791%209.835l26.083-16.624A29.92%2029.92%200%200%200%2098.235%2078.35a31.53%2031.53%200%200%200-3.105-20.232%2030%2030%200%200%200%204.474-11.182%2031.88%2031.88%200%200%200-5.447-24.116'%20style='fill:%23ff3e00'/%3e%3cpath%20d='M45.817%20106.582a20.72%2020.72%200%200%201-22.237-8.243%2019.17%2019.17%200%200%201-3.277-14.503%2018%2018%200%200%201%20.624-2.435l.49-1.498%201.337.981a33.6%2033.6%200%200%200%2010.203%205.098l.97.294-.09.968a5.85%205.85%200%200%200%201.052%203.878%206.24%206.24%200%200%200%206.695%202.485%205.8%205.8%200%200%200%201.603-.704L69.27%2076.28a5.43%205.43%200%200%200%202.45-3.631%205.8%205.8%200%200%200-.987-4.371%206.24%206.24%200%200%200-6.698-2.487%205.7%205.7%200%200%200-1.6.704l-9.953%206.345a19%2019%200%200%201-5.296%202.326%2020.72%2020.72%200%200%201-22.237-8.243%2019.17%2019.17%200%200%201-3.277-14.502%2017.99%2017.99%200%200%201%208.13-12.052l26.081-16.623a19%2019%200%200%201%205.3-2.329%2020.72%2020.72%200%200%201%2022.237%208.243%2019.17%2019.17%200%200%201%203.277%2014.503%2018%2018%200%200%201-.624%202.435l-.49%201.498-1.337-.98a33.6%2033.6%200%200%200-10.203-5.1l-.97-.294.09-.968a5.86%205.86%200%200%200-1.052-3.878%206.24%206.24%200%200%200-6.696-2.485%205.8%205.8%200%200%200-1.602.704L37.73%2051.72a5.42%205.42%200%200%200-2.449%203.63%205.79%205.79%200%200%200%20.986%204.372%206.24%206.24%200%200%200%206.698%202.486%205.8%205.8%200%200%200%201.602-.704l9.952-6.342a19%2019%200%200%201%205.295-2.328%2020.72%2020.72%200%200%201%2022.237%208.242%2019.17%2019.17%200%200%201%203.277%2014.503%2018%2018%200%200%201-8.13%2012.053l-26.081%2016.622a19%2019%200%200%201-5.3%202.328'%20style='fill:%23fff'/%3e%3c/svg%3e",j=()=>{const o=R;return{page:{subscribe:o.page.subscribe},navigating:{subscribe:o.navigating.subscribe},updated:o.updated}},U={subscribe(o){return j().page.subscribe(o)}};var A=i('<link rel="icon"/>'),E=i(`<style>@layer theme, base, components, utilities;
 		/* This style block will only be rendered if it's NOT the assignment page */
 		@layer theme {
   @theme default {
@@ -528,9 +504,9 @@
   1. Use a consistent sensible line-height in all browsers.
   2. Prevent adjustments of font size after orientation changes in iOS.
   3. Use a more readable tab size.
-  4. Use the user's configured `sans` font-family by default.
-  5. Use the user's configured `sans` font-feature-settings by default.
-  6. Use the user's configured `sans` font-variation-settings by default.
+  4. Use the user's configured \`sans\` font-family by default.
+  5. Use the user's configured \`sans\` font-feature-settings by default.
+  6. Use the user's configured \`sans\` font-variation-settings by default.
   7. Disable tap highlights on iOS.
 */
 
@@ -615,10 +591,10 @@
   }
 
   /*
-  1. Use the user's configured `mono` font-family by default.
-  2. Use the user's configured `mono` font-feature-settings by default.
-  3. Use the user's configured `mono` font-variation-settings by default.
-  4. Correct the odd `em` font sizing in all browsers.
+  1. Use the user's configured \`mono\` font-family by default.
+  2. Use the user's configured \`mono\` font-feature-settings by default.
+  3. Use the user's configured \`mono\` font-variation-settings by default.
+  4. Correct the odd \`em\` font sizing in all browsers.
 */
 
   code,
@@ -656,7 +632,7 @@
   }
 
   /*
-  Prevent `sub` and `sup` elements from affecting the line height in all browsers.
+  Prevent \`sub\` and \`sup\` elements from affecting the line height in all browsers.
 */
 
   sub,
@@ -722,8 +698,8 @@
   }
 
   /*
-  1. Make replaced elements `display: block` by default. (https://github.com/mozdevs/cssremedy/issues/14)
-  2. Add `vertical-align: middle` to align replaced elements more sensibly by default. (https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210)
+  1. Make replaced elements \`display: block\` by default. (https://github.com/mozdevs/cssremedy/issues/14)
+  2. Add \`vertical-align: middle\` to align replaced elements more sensibly by default. (https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210)
       This can trigger a poorly considered lint error in some tools but is included by design.
 */
 
@@ -806,7 +782,7 @@
 
   /*
   Set the default placeholder color to a semi-transparent version of the current text color in browsers that do not
-  crash when using `color-mix(…)` with `currentcolor`. (https://github.com/tailwindlabs/tailwindcss/issues/17194)
+  crash when using \`color-mix(…)\` with \`currentcolor\`. (https://github.com/tailwindlabs/tailwindcss/issues/17194)
 */
 
   @supports (not (-webkit-appearance: -apple-pay-button)) /* Not Safari */ or
@@ -843,7 +819,7 @@
   }
 
   /*
-  Prevent height from changing on date/time inputs in macOS Safari when the input is set to `display: block`.
+  Prevent height from changing on date/time inputs in macOS Safari when the input is set to \`display: block\`.
 */
 
   ::-webkit-datetime-edit {
@@ -871,7 +847,7 @@
   }
 
   /*
-  Center dropdown marker shown on inputs with paired `<datalist>`s in Chrome. (https://github.com/tailwindlabs/tailwindcss/issues/18499)
+  Center dropdown marker shown on inputs with paired \`<datalist>\`s in Chrome. (https://github.com/tailwindlabs/tailwindcss/issues/18499)
 */
 
   ::-webkit-calendar-picker-indicator {
@@ -879,7 +855,7 @@
   }
 
   /*
-  Remove the additional `:invalid` styles in Firefox. (https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737)
+  Remove the additional \`:invalid\` styles in Firefox. (https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737)
 */
 
   :-moz-ui-invalid {
@@ -917,30 +893,4 @@
   @tailwind utilities;
 }
 		@plugin '@tailwindcss/forms';
-		@plugin '@tailwindcss/typography';
-	</style><!--]--> <!--[!--><!----><div class="flex items-center justify-between p-4"><nav style="color: blue"><ul><!--[--><li><a href="/" target="_self">Home</a></li><li><a href="/contact" target="_self">Contact</a></li><li><a href="https://github.com/Alex-Naglich-CMU" target="_blank">Github</a></li><li><a href="/assignments/a1" target="_self">A1</a></li><!--]--></ul></nav> <a href="/" class="rounded-full bg-[rgba(0,0,139,0.4)] p-0.5" aria-label="Go to Homepage"><div class="relative h-16 w-16 overflow-hidden rounded-full"><img src="/Alex_Naglich_Face.png" alt="Home" class="h-full w-full scale-[1.50] object-cover object-[1px_30%]"/> <div class="absolute inset-0 rounded-full transition-all duration-200 hover:bg-white/5"></div></div></a></div><!----> <div style="display: flex; flex-direction: column; align-items: left"><h1 style="text-align: center" class="text-2xl">Welcome to the Alex Naglich Data-Vis 2025 Landing Page! Working on moving this all to Sveltekit</h1> <div>Here is an image for your enjoyment</div> <img src="/BuggedSolidworksScreenshot.png" alt="Buggy" style="width: 500px; height: auto;"/></div><!----><!--]--><!----><!----><!--]--> <!--[!--><!--]--><!--]-->
-			
-			<script>
-				{
-					__sveltekit_1g9e8ri = {
-						base: new URL(".", location).pathname.slice(0, -1)
-					};
-
-					const element = document.currentScript.parentElement;
-
-					Promise.all([
-						import("./_app/immutable/entry/start.Ddo3TewA.js"),
-						import("./_app/immutable/entry/app.pQZJqsxC.js")
-					]).then(([kit, app]) => {
-						kit.start(app, element, {
-							node_ids: [0, 3],
-							data: [null,null],
-							form: null,
-							error: null
-						});
-					});
-				}
-			</script>
-		</div>
-	</body>
-</html>
+		@plugin '@tailwindcss/typography';</style>`),O=i("<!> <!>",1);function G(o,t){k(t,!0);const a=()=>S(U,"$page",s),[s,h]=C(),d=a().url.pathname.includes("/assignments");var c=O();w(e=>{var l=A();b(()=>z(l,"href",M)),r(e,l)});var n=g(c);{var m=e=>{var l=E();r(e,l)};v(n,e=>{d||e(m)})}var p=f(n,2);y(p,()=>t.children??x),r(o,c),u(),h()}export{G as component,B as universal};
