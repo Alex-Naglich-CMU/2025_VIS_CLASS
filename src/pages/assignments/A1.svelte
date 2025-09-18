@@ -1,3 +1,8 @@
+<script>
+	import casesByZip from "/a1/cases_by_zip.png";
+
+</script>
+
 <svelte:head>
 	<title>Data Vis Assignment 1</title>
 	<link rel="stylesheet" href="https://dig.cmu.edu/datavis-fall-2024/assignments/report.css" />
@@ -67,7 +72,7 @@
 		<h2>Discoveries & Insights</h2>
 
 		<figure>
-          <img src="/a1/cases_by_zip.png" alt="cases by zip" />
+          <img src="{casesByZip}" alt="cases by zip" />
           <figcaption>Cases by Zip Code</figcaption>
         </figure>
 

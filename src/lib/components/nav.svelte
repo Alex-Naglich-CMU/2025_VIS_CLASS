@@ -1,4 +1,6 @@
 <script>
+	import AlexFace from "/Alex_Naglich_Face.png";
+
   const navRoutes = [
     { path: "/", name: "Home" },
     { path: "/contact", name: "Contact" },
@@ -37,9 +39,8 @@
     aria-label="Go to Homepage"
   >
     <div class="relative h-16 w-16 overflow-hidden rounded-full">
-      <!-- You had a commented-out image, so I'll replace it with a placeholder. -->
       <img
-        src="/Alex_Naglich_Face.png"
+        src="{AlexFace}"
         alt="Home"
         class="h-full w-full object-cover object-center"
       />
