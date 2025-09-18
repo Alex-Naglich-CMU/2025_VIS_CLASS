@@ -1,1 +1,0 @@
-import"../chunks/DsnmJJEf.js";import{ah as a,ai as n,a9 as i}from"../chunks/DhvMmYQQ.js";import{s as p}from"../chunks/Dg02FOK-.js";const s=!0,u=Object.freeze(Object.defineProperty({__proto__:null,prerender:s},Symbol.toStringTag,{value:"Module"}));function d(o,r){var e=a(),t=n(e);p(t,()=>r.children),i(o,e)}export{d as component,u as universal};
