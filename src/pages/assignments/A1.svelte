@@ -88,7 +88,10 @@
     <h2>Discoveries & Insights</h2>
     <h3>Overdose Case</h3>
     <figure>
-      <img src={casesByZip} alt="Overdose Cases Containing Fentanyl Mapped by Zip" />
+      <img
+        src={casesByZip}
+        alt="Overdose Cases Containing Fentanyl Mapped by Zip"
+      />
       <figcaption>
         This figure shows a distribution of overdoses by ZIP. A particularly
         high concentration can be observed in certain areas, such as 15212
@@ -105,7 +108,10 @@
 
     <h3>Overdose Cases Containing Fentanyl</h3>
     <figure>
-      <img src={casesByZipFentanyl} alt="Overdose Cases Containing Fentanyl Mapped by Zip" />
+      <img
+        src={casesByZipFentanyl}
+        alt="Overdose Cases Containing Fentanyl Mapped by Zip"
+      />
       <figcaption>
         This figure is the same as the previous, but only showing areas with
         Overdoses including fentanyl or a fentanyl analog. This shows similar
