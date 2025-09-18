@@ -168,7 +168,7 @@
 
     <figure>
       <img
-        src={Counts_By_Pop}
+        src={counts_by_pop}
         alt="Counts of Overdoses and Fentanyl Overdoses by Population"
       />
       <figcaption>
@@ -200,6 +200,7 @@
         them with me! It didn't work well with the encoding method I used.
       </figcaption>
     </figure>
+
     <!--
 		<figure>
           <img src="IMAGE_FILENAME" alt="" />
