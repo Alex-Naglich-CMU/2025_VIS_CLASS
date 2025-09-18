@@ -1,3 +1,8 @@
+<script>
+	import vl from 'vega-lite-api';
+
+</script>
+
 <svelte:head>
 	<title>Data Vis Assignment 1</title>
 	<link rel="stylesheet" href="https://dig.cmu.edu/datavis-fall-2024/assignments/report.css" />
@@ -66,11 +71,12 @@
 	<section>
 		<h2>Discoveries & Insights</h2>
 
-		<!-- <figure>
-          <img src="IMAGE_FILENAME" alt="" />
-          <figcaption>ENTER IMAGE CAPTION HERE.</figcaption>
+		<figure>
+          <img src="/a1/cases_by_zip.png" alt="cases by zip" />
+          <figcaption>Cases by Zip Code</figcaption>
         </figure>
 
+<!-- <figure>
         <figure>
           <img src="IMAGE_FILENAME" alt="" />
           <figcaption>ENTER IMAGE CAPTION HERE.</figcaption>
