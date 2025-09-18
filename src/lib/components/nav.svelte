@@ -40,7 +40,7 @@
   >
     <div class="relative h-16 w-16 overflow-hidden rounded-full">
       <img
-        src="{AlexFace}"
+        src={AlexFace}
         alt="Home"
         class="h-full w-full object-cover object-center"
       />

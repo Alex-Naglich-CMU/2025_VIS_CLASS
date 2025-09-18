@@ -72,7 +72,7 @@
 		<h2>Discoveries & Insights</h2>
 
 		<figure>
-          <img src="{casesByZip}" alt="cases by zip" />
+          <img src={casesByZip} alt="cases by zip" />
           <figcaption>Cases by Zip Code</figcaption>
         </figure>
 
