@@ -4,6 +4,8 @@
   import ratio_containing_fentanyl_map from "/a1/ratio_containing_fentanyl_map.png";
   import ratio_bar_chart from "/a1/ratio_bar_chart.png";
   import counts_by_pop from "/a1/counts_by_pop.png";
+  import overdoses_over_time from "/a1/overdoses_over_time.png";
+  import drug_categories from "/a1/drug_categories.png";
 </script>
 
 <svelte:head>
@@ -158,20 +160,25 @@
         ratio than the map did. By adding in the total overdose counts as a
         color, a comparison can be made directly in a single representation.
         This shows that the zips with higher total overdoses tend to be on the
-        higher end for fentanyl inclusion, but not exceptionally so. It also
-        becomes tricky when comparisons are made against many zips with low
-        population. Accordingly, for the next representation I am interested in
-        including population data<br /><br /> Wherever the value for the ratio was
-        zero, it was edited to .005 to allow for the color to be seen- in case there
-        were any instances with high total counts but low fentanyl counts. There
-        were none, but it is still good to see. Additionally, this view revealed
-        to me that there are ten zip codes that I have listed as one of the 125 zips
-        within allegheny county, but have they have zero overdose counts. Investigating
-        this, I found that they were PO boxes and unique mailing provisions, including
-        one for CMU campus(15289).
+        higher end for fentanyl inclusion, but not exceptionally so. Most values
+        are near the .1 ratio, so it is reasonable to state, overall, that 1 in
+        10 overdoses contain fentanyl. This is lower than I expected. However,
+        this does not take population per zip into account. Perhaps low
+        population zips scew the data. Accordingly, the next figure will explore
+        counts by population.
+
+        <br /><br /> Wherever the value for the ratio was zero, it was edited to
+        .005 to allow for the color to be seen- in case there were any instances
+        with high total counts but low fentanyl counts. There were none, but it is
+        still good to see. Additionally, this view revealed to me that there are
+        ten zip codes that I have listed as one of the 125 zips within allegheny
+        county, but have they have zero overdose counts. Investigating this, I found
+        that they were PO boxes and unique mailing provisions, including one for
+        CMU campus(15289).
       </figcaption>
     </figure>
 
+    <h3>Counts of Overdoses and Fentanyl Overdoses by Population</h3>
     <figure>
       <img
         src={counts_by_pop}
@@ -187,7 +194,12 @@
         graphically that the overdose totals per capita increase faster than the
         fentanyl overdose rates. It is interesting to note that both the overall
         and fentanyl seem to be at their height around 25000 population, and it
-        dips off after this point.
+        dips off after this point. Overall, it appears that the 1 to 10 ratio is
+        still true across population sizes, which I verified using the
+        interactivity instead of a polynomial fit of total counts and a 1/10
+        scale fit compared to the fit of the fentanyl counts (as I would have
+        preferred, had it worked!). My own neighborhood, 15213, sat at 5 to 58,
+        which is close to the 1 to 10 ratio!
 
         <br /><br />The vega-lite also attached interactivity listing the
         zipcode and city name along the population and count for each data
@@ -207,36 +219,94 @@
       </figcaption>
     </figure>
 
-    <!--
-		<figure>
-          <img src="IMAGE_FILENAME" alt="" />
-          <figcaption>ENTER IMAGE CAPTION HERE.</figcaption>
-        </figure>
+    <h3>Overdose Counts Year over Year</h3>
 
-        <figure>
-          <img src="IMAGE_FILENAME" alt="" />
-          <figcaption>ENTER IMAGE CAPTION HERE.</figcaption>
-        </figure>
+    <figure>
+      <img src={overdoses_over_time} alt="Overdoses Counts Year over Year" />
+      <figcaption>
+        Overdoses were binned annually, so any overdose that is reported during
+        a calendar year will reflect on the number of that year (December 2024
+        incidents count to 2024). Fentanyl first appeared in 2016, and began to
+        spike in 2020 alongside the Covid Lockdowns (correlation or causation
+        unknown and beyond the scope of this discovery). Naloxone distribution
+        began in 2021 during this spike, and the peak was the following year,
+        followed by a decline. This could be attributed to the naloxone
+        distribution, but it seems that drops in overall overdoses was not far
+        behind. Not enough time has transpired to see the effects of the vending
+        machine distributions on the overall population, but getting the zips
+        where those vending machines were installed and revisiting the data in a
+        few years could be insightful! The entire dataset was included, but
+        separated from overdoses specifically within Allegheny County, as some
+        overdoses were recorded outside of the county. This did not
+        significantly alter the takeaways, but it does appear that the disparity
+        between out-of-Allegheny and within-Allegheny scales nonlinearly, with
+        the gap widening disproportionately during peak overdose periods.<br
+        /><br />
 
-        <figure>
-          <img src="IMAGE_FILENAME" alt="" />
-          <figcaption>ENTER IMAGE CAPTION HERE.</figcaption>
-        </figure>
+        The fentanyl fall corresponds significantly with the overall fall... I
+        am unaware of any major changes in policy that would have affected this
+        besides the increased availability of naloxone. But ALL overdoses
+        decreased... Let's explore ALL opioids that naloxone is effective on,
+        this research was limited to fentanyl so far.
+      </figcaption>
+    </figure>
 
-        <figure>
-          <img src="IMAGE_FILENAME" alt="" />
-          <figcaption>ENTER IMAGE CAPTION HERE.</figcaption>
-        </figure>
+    <h3>Drugs by Count and Category</h3>
+    <figure>
+      <img src={drug_categories} alt="Drugs by Count and Category" />
+      <figcaption>
+        It can be seen that the most overdosed on drugs are, in order, Fentanyl,
+        Cocaine, Heroin, and Alcohol. Using the tooltip, the next five are
+        Alprazolam, Acetyl Fentanyl, Para-Fluorofentanyl, Oxycodone, Methadone,
+        and Morphine. Six of the top ten are opioids. It can be seen that nearly
+        half of all overdose cases involve an opioid of some kind, so it makes
+        sense that the distribution of naloxone would dramatically decrease
+        overall overdoses as naloxone is effective against most opioids.<br
+        /><br />
 
-        <figure>
-          <img src="IMAGE_FILENAME" alt="" />
-          <figcaption>ENTER IMAGE CAPTION HERE.</figcaption>
-        </figure>   -->
+        The next steps would be to compare this to usage rates of these drugs,
+        to see the lethality of each. But that is beyond the scope of this
+        assignment, and extremely difficult data to collect, as it is often
+        skewed by survivor bias and self-reporting.
+
+        <br /><br /> At this stage, my head is throbbing and it is almost midnight
+        before the due date. LLMs did some heavy lifting on figuring out how to make
+        the markArc put labels in the right position, and how to manipulate my maps
+        and objects and arrays and such to give me the categories and such.
+      </figcaption>
+    </figure>
   </section>
 
   <section>
     <h2>Summary</h2>
+    <p>
+      In this discovery, we found that the distribution of overdoses has a
+      correlation with population, and that there aren't any particularly high
+      fentanyl use areas that aren't that way due to high population and
+      population density (besides two hotspots on the edge of the county). We
+      found that the areas with the most overdoses, and likely the most EMT
+      calls, are area codes 15210 and 15212, which I may end up working. There
+      was a spike in fentanyl overdoses near the beginning of the pandemic,
+      which has been declining since 2022, alongside overall overdoses. This
+      could be related to increased access to naloxone and other harm reduction
+      strategies. Such an argument is strongly supported by the fact that 6 of
+      the top 10 drugs involved in overdoses are opioids, and naloxone is
+      effective against most of them. Of course, this does not account for the
+      >50% decrease in overdoses between 2022 and 2025, but is likely a
+      significant factor judging from the fentanyl trend.
 
-    <p>WRITE FINAL SUMMARY HERE.</p>
+      <br /><br />
+      I learned a lot. My head is burning. I need sleep. However, I am very glad
+      I invested so much time and effort into this. Beyond improving my skills with
+      JS and Vega-Lite-Api, which I think I would prefer to just use D3 or Vega-Lite
+      in the future, I improved my understanding of data representation and manipulation.
+      I made graphs I never knew how to make before, I found datasets independently
+      and used them to, in my opinion, great effect. I had a lot of questions, and
+      I answered them. I was genuinely interested in much of this, as I will soon
+      begin work as an EMT and have training to handle these cases, so this was sincerely
+      very informational and beneficial for me, personally. This discovery process
+      was very valuable for me. If you have any tips for me, please let me know!
+      I'll be happy to attend an office hours or similar.
+    </p>
   </section>
 </main>
