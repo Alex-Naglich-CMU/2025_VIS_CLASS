@@ -256,7 +256,7 @@
       <img src={drug_categories} alt="Drugs by Count and Category" />
       <figcaption>
         It can be seen that the most overdosed on drugs are, in order, Fentanyl,
-        Cocaine, Heroin, and Alcohol. Using the tooltip, the next five are
+        Cocaine, Heroin, and Alcohol. Using the tooltip, the next six are
         Alprazolam, Acetyl Fentanyl, Para-Fluorofentanyl, Oxycodone, Methadone,
         and Morphine. Six of the top ten are opioids. It can be seen that nearly
         half of all overdose cases involve an opioid of some kind, so it makes

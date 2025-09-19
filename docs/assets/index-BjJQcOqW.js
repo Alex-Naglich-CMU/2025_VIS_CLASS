@@ -117,7 +117,7 @@
         besides the increased availability of naloxone. But ALL overdoses
         decreased... Let's explore ALL opioids that naloxone is effective on,
         this research was limited to fentanyl so far.</figcaption></figure> <h3>Drugs by Count and Category</h3> <figure><img alt="Drugs by Count and Category"/> <figcaption>It can be seen that the most overdosed on drugs are, in order, Fentanyl,
-        Cocaine, Heroin, and Alcohol. Using the tooltip, the next five are
+        Cocaine, Heroin, and Alcohol. Using the tooltip, the next six are
         Alprazolam, Acetyl Fentanyl, Para-Fluorofentanyl, Oxycodone, Methadone,
         and Morphine. Six of the top ten are opioids. It can be seen that nearly
         half of all overdose cases involve an opioid of some kind, so it makes
