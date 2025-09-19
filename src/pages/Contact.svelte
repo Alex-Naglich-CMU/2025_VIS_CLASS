@@ -1,14 +1,9 @@
-<body>
-  <div id="nav-placeholder"></div>
-  <h1>Contact</h1>
-  <form
-    action="mailto:alexnaglich@gmail.com"
-    method="GET"
-    enctype="text/plain"
+<main>
+  Reach me at <a class="text-blue-500" href="mailto:anaglich@andrew.cmu.edu"
+    >anaglich@andrew.cmu.edu</a
   >
-    <input name="email" type="email" />
-    <input name="subject" />
-    <textarea name="body"></textarea>
-    <button type="submit">Submit</button>
-  </form>
-</body>
+  <br />
+  And check out my personal website at <a class="text-blue-500" href="https://alexnaglich.com"
+    >alexnaglich.com</a
+  >
+</main>
