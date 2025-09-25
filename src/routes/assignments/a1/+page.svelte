@@ -82,7 +82,7 @@
     <h3>Overdose Case</h3>
     <figure>
       <img
-        src="/images/a1/casesByZip.png"
+        src="/images/a1/cases_by_zip.png"
         alt="Overdose Cases Containing Fentanyl Mapped by Zip"
       />
       <figcaption>
@@ -102,7 +102,7 @@
     <h3>Overdose Cases Containing Fentanyl</h3>
     <figure>
       <img
-        src="/images/a1/casesByZipFentanyl.png"
+        src="/images/a1/cases_by_zip_fentanyl.png"
         alt="Overdose Cases Containing Fentanyl Mapped by Zip"
       />
       <figcaption>
@@ -172,7 +172,7 @@
     <h3>Counts of Overdoses and Fentanyl Overdoses by Population</h3>
     <figure>
       <img
-        src="/images/a1/counts_by_population.png"
+        src="/images/a1/counts_by_pop.png"
         alt="Counts of Overdoses and Fentanyl Overdoses by Population"
       />
       <figcaption>
@@ -244,7 +244,7 @@
 
     <h3>Drugs by Count and Category</h3>
     <figure>
-      <img src="/images/a1/drugs_by_count_and_category.png" alt="Drugs by Count and Category" />
+      <img src="/images/a1/drug_categories.png" alt="Drugs by Count and Category" />
       <figcaption>
         It can be seen that the most overdosed on drugs are, in order, Fentanyl,
         Cocaine, Heroin, and Alcohol. Using the tooltip, the next six are
