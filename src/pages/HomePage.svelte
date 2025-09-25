@@ -4,7 +4,7 @@
 
 <div style="display: flex; flex-direction: column; align-items: center">
   <h1 class="text-3xl font-bold mb-4 text-center">
-    Test Welcome to the Alex Naglich Data-Vis 2025 Landing Page! Just moved everything over from Svelte and fixed all the broken Sveltekit stuff. <br> Am I supposed to have anything else here?...
+    Test to main Welcome to the Alex Naglich Data-Vis 2025 Landing Page! Just moved everything over from Svelte and fixed all the broken Sveltekit stuff. <br> Am I supposed to have anything else here?...
   </h1>
   <div>Here is an image of a corrupted Solidworks for your enjoyment:</div>
 	<img src={BuggedSolidworksScreenshot} alt="Thanks Solidworks" class="h-50" />
