@@ -1,5 +1,5 @@
 <script lang="ts">
-	import AQIChart from '$lib/AQIChart.svelte';
+	import AQIChart from '$lib/a3/AQIChart.svelte';
 	import * as d3 from 'd3';
 
 	const datasets = {
@@ -20,7 +20,7 @@
 			'https://dig.cmu.edu/datavis-fall-2025/assignments/data/%5BUSA-Pennsylvania-Pittsburgh%5D_daily-avg.csv'
 	};
 
-	const selectedDataset: keyof typeof datasets = $state('avalon');
+	let selectedDataset: keyof typeof datasets = $state('avalon');
 
 	const data = $derived.by(() =>
 		d3.csv(datasets[selectedDataset], (d: any) => ({
@@ -36,12 +36,21 @@
 	);
 </script>
 
+<div class="flex items-center justify-center gap-4 mb-4">
+	<h2>AQI Chart for: </h2>
+
+	<select class="select select-accent select-lg" bind:value={selectedDataset}>
+		{#each Object.entries(datasets) as [key, url]}
+			<option value={key}>{key}</option>
+		{/each}
+	</select>
+</div>
+
 {#await data}
 	<!-- promise is pending -->
 	<p>loading data...</p>
 {:then data}
 	<!-- promise was fulfilled or not a Promise -->
-	<h2>AQI Chart</h2>
 	<AQIChart {data} />
 {:catch error}
 	<!-- promise was rejected -->
