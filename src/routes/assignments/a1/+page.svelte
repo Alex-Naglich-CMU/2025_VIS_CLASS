@@ -1,3 +1,6 @@
+<script lang="ts">
+    import { asset } from '$app/paths';
+</script>
 
 <svelte:head>
   <title>Data Vis Assignment 1</title>
@@ -82,7 +85,7 @@
     <h3>Overdose Case</h3>
     <figure>
       <img
-        src="/images/a1/cases_by_zip.png"
+        src={asset("/images/a1/cases_by_zip.png")}
         alt="Overdose Cases Containing Fentanyl Mapped by Zip"
       />
       <figcaption>
@@ -102,7 +105,7 @@
     <h3>Overdose Cases Containing Fentanyl</h3>
     <figure>
       <img
-        src="/images/a1/cases_by_zip_fentanyl.png"
+        src={asset("/images/a1/cases_by_zip_fentanyl.png")}
         alt="Overdose Cases Containing Fentanyl Mapped by Zip"
       />
       <figcaption>
@@ -120,7 +123,7 @@
     <h3>Percentage of Overdoses Containing Fentanyl by Zip</h3>
     <figure>
       <img
-        src="/images/a1/ratio_containing_fentanyl_map.png"
+        src={asset("/images/a1/ratio_containing_fentanyl_map.png")}
         alt="Percentage of Overdoses Containing Fentanyl Mapped by Zip"
       />
       <figcaption>
@@ -141,7 +144,7 @@
     <h3>Ratio of Fentanyl Cases and Total Counts For Each Zip</h3>
     <figure>
       <img
-        src="/images/a1/ratio_bar_chart.png"
+        src={asset("/images/a1/ratio_bar_chart.png")}
         alt="Ratio of Fentanyl Cases and Total Counts For Each Zip Bar Chart"
       />
       <figcaption>
@@ -172,7 +175,7 @@
     <h3>Counts of Overdoses and Fentanyl Overdoses by Population</h3>
     <figure>
       <img
-        src="/images/a1/counts_by_pop.png"
+        src={asset("/images/a1/counts_by_pop.png")}
         alt="Counts of Overdoses and Fentanyl Overdoses by Population"
       />
       <figcaption>
@@ -213,7 +216,7 @@
     <h3>Overdose Counts Year over Year</h3>
 
     <figure>
-      <img src="/images/a1/overdoses_over_time.png" alt="Overdoses Counts Year over Year" />
+      <img src={asset("/images/a1/overdoses_over_time.png")} alt="Overdoses Counts Year over Year" />
       <figcaption>
         Overdoses were binned annually, so any overdose that is reported during
         a calendar year will reflect on the number of that year (December 2024
@@ -244,7 +247,7 @@
 
     <h3>Drugs by Count and Category</h3>
     <figure>
-      <img src="/images/a1/drug_categories.png" alt="Drugs by Count and Category" />
+      <img src={asset("/images/a1/drug_categories.png")} alt="Drugs by Count and Category" />
       <figcaption>
         It can be seen that the most overdosed on drugs are, in order, Fentanyl,
         Cocaine, Heroin, and Alcohol. Using the tooltip, the next six are
