@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { asset } from "$app/paths";
+
 	interface Project {
 		title: string;
 		image: string;
@@ -12,7 +14,7 @@
 	{#each data as project}
 		<article>
 			<svelte:element this={'h' + hLevel}>{project.title}</svelte:element>
-			<img src={project.image} alt="" />
+			<img src={asset(project.image)} alt="" />
 			<p>{project.description}</p>
 		</article>
 	{/each}
