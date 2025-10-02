@@ -11,12 +11,12 @@
 </svelte:head>
 
 <header>
-  <h1>
+  <h1 class="text-black">
     <small>Assignment 1</small>
     Exploratory Data Analysis
   </h1>
 
-  <p><strong>Alex Naglich</strong> — <em>anaglich@andrew.cmu.edu</em></p>
+  <p class="text-black"><strong>Alex Naglich</strong> — <em>anaglich@andrew.cmu.edu</em></p>
 </header>
 <main>
   <section>

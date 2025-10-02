@@ -4,11 +4,15 @@
 	import Nav from '$lib/components/nav.svelte';
 
 	let { children } = $props();
+
 </script>
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
 </svelte:head>
-<Nav/>
-{@render children?.()}
-
+<Nav />
+<div class="container mx-auto">
+	<div class="content">
+		{@render children?.()}
+	</div>
+</div>
