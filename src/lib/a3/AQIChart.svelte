@@ -55,7 +55,7 @@
 <div>To whoever is giving me feedback: Check back in in a day or two. I was unable to figure out d3 thoroughly enough in time for class Thursday. -Alex	</div>
 
 <div bind:this={chartContainer}>
-	<svg {width} {height}>
+	<svg {width} {height}>   // Everything after this point is autofill written as of now. I nudged it and it produced what I wanted, but I do not understand it and will rewrite it when I have time to finish.
 		<g transform={`translate(${margin.left},${margin.top})`}>
 			{#each data as item}
 				<circle
@@ -85,7 +85,7 @@
 	{JSON.stringify(data, null, 2)}
 	</pre>
 {:else}
-	test
+	Click "Show Raw Data"
 {/if}
 
 <style>
