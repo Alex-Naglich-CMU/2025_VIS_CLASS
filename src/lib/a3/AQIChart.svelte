@@ -13,18 +13,41 @@
 		usAqi: number;
 	}
 
-	let showRaw = $state(false);
-
-	// properties this component accepts
 	const { data }: { data: Item[] } = $props();
 
-	let chartContainer;
+	let width = $state(800);
+	let height = $state(300);
+	let margin = $state({ top: 80, right: 20, bottom: 20, left: 40 });
+	let showRaw = $state(false);
 
-	const height = 400;
-	const width = 800;
-	const margin = { top: 20, right: 30, bottom: 30, left: 40 };
+	let xScale = $derived(
+		d3
+			.scaleTime()
+			.domain([d3.min(data, (d) => d.timestamp), d3.max(data, (d) => d.timestamp) ?? new Date()])
+			.range([margin.left, width - margin.right])
+	);
 
+	let yScale = $derived(
+		d3
+			.scaleLinear()
+			.domain([0, d3.max(data, (d) => d.usAqi) ?? 500])
+			.range([height - margin.bottom, margin.top])
+	);
 
+	let xAxis = $derived(d3.axisBottom(xScale));
+	let yAxis = $derived(d3.axisLeft(yScale));
+
+	let xAxisRef: SVGGElement;
+	let yAxisRef: SVGGElement;
+
+	$effect(() => {
+		if (xAxisRef && data.length > 0) {
+			d3.select(xAxisRef).call(xAxis);
+		}
+		if (yAxisRef && data.length > 0) {
+			d3.select(yAxisRef).call(yAxis);
+		}
+	});
 </script>
 
 <div class="flex items-center gap-2">
@@ -52,31 +75,52 @@
 	{/each}
 </div>
 
-<div>To whoever is giving me feedback: Check back in in a day or two. I was unable to figure out d3 thoroughly enough in time for class Thursday. -Alex	</div>
+{data[0].timestamp}
 
-<div bind:this={chartContainer}>
-	<svg {width} {height}>   // Everything after this point is autofill written as of now. I nudged it and it produced what I wanted, but I do not understand it and will rewrite it when I have time to finish.
+<div>
+	To whoever is giving me feedback: Check back in in a day or two. I was unable to figure out d3
+	thoroughly enough in time for class Thursday. -Alex
+</div>
+
+<div>
+	<svg {width} {height}>
+		// Everything after this point is autofill written as of now. I nudged it and it produced what I
+		wanted, but I do not understand it and will rewrite it when I have time to finish.
 		<g transform={`translate(${margin.left},${margin.top})`}>
 			{#each data as item}
 				<circle
-					cx={d3.scaleTime().domain(d3.extent(data, (d) => d.timestamp) as [Date, Date]).range([0, width - margin.left - margin.right])(item.timestamp)}
-					cy={d3.scaleLinear().domain([0, d3.max(data, (d) => d.usAqi) ?? 500]).range([height - margin.top - margin.bottom, 0])(item.usAqi)}
+					cx={d3
+						.scaleTime()
+						.domain(d3.extent(data, (d) => d.timestamp) as [Date, Date])
+						.range([0, width - margin.left - margin.right])(item.timestamp)}
+					cy={d3
+						.scaleLinear()
+						.domain([0, d3.max(data, (d) => d.usAqi) ?? 500])
+						.range([height - margin.top - margin.bottom, 0])(item.usAqi)}
 					r="3"
 					fill="steelblue"
 					opacity="0.7"
 				/>
 			{/each}
+		</g>
+		<g>
 			{#each qualityLevels as level}
-				<rect
-					x="0"
-					y={d3.scaleLinear().domain([0, d3.max(data, (d) => d.usAqi) ?? 500]).range([height - margin.top - margin.bottom, 0])(level.max ?? (d3.max(data, (d) => d.usAqi) ?? 500))}
-					width={width - margin.left - margin.right}
-					height={d3.scaleLinear().domain([0, d3.max(data, (d) => d.usAqi) ?? 500]).range([height - margin.top - margin.bottom, 0])(level.min) - d3.scaleLinear().domain([0, d3.max(data, (d) => d.usAqi) ?? 500]).range([height - margin.top - margin.bottom, 0])(level.max ?? (d3.max(data, (d) => d.usAqi) ?? 500))}
-					fill={level.color}
-					opacity="0.1"
-				/>
+				{#if yScale(level.min) > margin.top}
+					<rect
+						x={margin.left}
+						width={width - margin.left - margin.right}
+						y={yScale(level.max) > margin.top ? yScale(level.max) : margin.top}
+						height={yScale(level.max) > margin.top
+							? yScale(level.min) - yScale(level.max)
+							: yScale(level.min) - margin.top}
+						fill={level.color}
+						opacity="0.2"
+					/>
+				{/if}
 			{/each}
 		</g>
+		<g class="x-axis" transform="translate(0, {height - margin.bottom})" bind:this={xAxisRef}></g>
+		<g class="y-axis" transform="translate({margin.left}, 0)" bind:this={yAxisRef}></g>
 	</svg>
 </div>
 
