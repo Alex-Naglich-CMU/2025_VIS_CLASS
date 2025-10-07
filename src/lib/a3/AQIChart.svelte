@@ -172,7 +172,7 @@
 					cx={xScale(item.timestamp)}
 					cy={yScale(item.usAqi)}
 					r="1.5"
-					fill="steelblue"
+					fill="blue"
 					opacity="0.7"
 				/>
 			{/each}
