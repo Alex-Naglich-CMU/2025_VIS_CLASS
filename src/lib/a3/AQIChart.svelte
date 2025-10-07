@@ -1,6 +1,7 @@
 <script lang="ts">
 	import * as d3 from 'd3';
 	import qualityLevels from '$lib/a3/qualityLevels.json';
+	import { onMount } from 'svelte';
 
 	interface Item {
 		city: string;
@@ -13,17 +14,22 @@
 		usAqi: number;
 	}
 
+	let innerWidth = $state(0);
+
 	const { data }: { data: Item[] } = $props();
 
-	let width = $state(800);
-	let height = $state(300);
+	let width = $derived(innerWidth < 800 ? innerWidth - 20 : 800);
+	let height = $derived(width * 0.6);
 	let margin = $state({ top: 80, right: 20, bottom: 20, left: 40 });
 	let showRaw = $state(false);
 
 	let xScale = $derived(
 		d3
 			.scaleTime()
-			.domain([d3.min(data, (d) => d.timestamp), d3.max(data, (d) => d.timestamp) ?? new Date()])
+			.domain([
+				d3.min(data, (d) => d.timestamp) ?? new Date(),
+				d3.max(data, (d) => d.timestamp) ?? new Date()
+			])
 			.range([margin.left, width - margin.right])
 	);
 
@@ -49,6 +55,8 @@
 		}
 	});
 </script>
+
+<svelte:window bind:innerWidth />
 
 <div class="flex items-center gap-2">
 	<label for="raw-data-toggle" class="text-xl font-semibold"> Show Raw Data </label>
@@ -84,8 +92,6 @@
 
 <div>
 	<svg {width} {height}>
-		// Everything after this point is autofill written as of now. I nudged it and it produced what I
-		wanted, but I do not understand it and will rewrite it when I have time to finish.
 		<g transform={`translate(${margin.left},${margin.top})`}>
 			{#each data as item}
 				<circle
@@ -109,9 +115,9 @@
 					<rect
 						x={margin.left}
 						width={width - margin.left - margin.right}
-						y={yScale(level.max) > margin.top ? yScale(level.max) : margin.top}
-						height={yScale(level.max) > margin.top
-							? yScale(level.min) - yScale(level.max)
+						y={yScale(level.max ?? 500) > margin.top ? yScale(level.max ?? 500) : margin.top}
+						height={yScale(level.max ?? 500) > margin.top
+							? yScale(level.min) - yScale(level.max ?? 500)
 							: yScale(level.min) - margin.top}
 						fill={level.color}
 						opacity="0.2"
