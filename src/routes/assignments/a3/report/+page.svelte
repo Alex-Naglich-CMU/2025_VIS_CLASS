@@ -43,11 +43,15 @@
 		datasets and formulated a question, then considered how I could answer that question using an
 		interesting UI... then I did it bit by bit. Part 1 took me around 8 hours of work once I had all
 		of the other infrastructure around it working. Part 2 took me about XXXXXXXXXXXXXXXXX hours. I'm
-		not sure how to describe the development process, it's usually just a series of getting stuck
-		and looking up documentation or Googling or asking an LLM until I slowly, iteratively approach my goal. Speaking of, I used AI to answer
-		questions and to provide commentary on my code. For example, I would ask the LLM how svg paths
-		work, or asking it for the fifth time how maps work, or what the order of events is within the
-		function <br /><code
+		not sure how to describe the development process besides the answers I provided in the other
+		questions as to how I came up with the idea... In this case for Part 2 I looked at the Data and
+		realized it was all pretty much identical except for time, location, and AQI- the rest was
+		immaterial (Top pollutant was almost always PM25 and AQI ~= 4.167 * PM25) so nothing to explore
+		there. The actual process though is usually just a series of getting stuck and looking up
+		documentation or Googling or asking an LLM until I slowly, iteratively approach my goal.
+		Speaking of, I used AI to answer questions and to provide commentary on my code. For example, I
+		would ask the LLM how svg paths work, or asking it for the fifth time how maps work, or what the
+		order of events is within the function <br /><code
 			>d3.bin&lt;Item, Date&gt;().value((d) =&gt;
 			d.timestamp).thresholds(d3.utcMonth.range(d3.min(data, (d) =&gt; d.timestamp) ?? new
 			Date(),d3.max(data, (d) =&gt; d.timestamp) ?? new Date()))(data)</code
