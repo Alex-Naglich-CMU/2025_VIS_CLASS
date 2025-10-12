@@ -36,6 +36,9 @@
 	let margin = $state({ top: 20, right: 20, bottom: 40, left: 40 });
 	let showRaw = $state(false);
 	let selectedDataset: keyof typeof data = $state('Avalon');
+	let hoveredDataset: string | null = $state(null);
+	let mouseX = $state(0);
+	let mouseY = $state(0);
 
 	// Scales
 	let xScale = $derived(
@@ -200,60 +203,118 @@
 </div>
 
 <!-- SVG Container -->
-<svg {width} {height}>
-	<!-- Quality Level Background Colors -->
-	<g>
-		{#each qualityLevels as level}
-			{#if yScale(level.min) > margin.top}
-				<rect
-					x={margin.left}
-					width={width - margin.left - margin.right}
-					y={yScale(level.max ?? 500) > margin.top ? yScale(level.max ?? 500) : margin.top}
-					height={yScale(level.max ?? 500) > margin.top
-						? yScale(level.min - 1) - yScale(level.max ?? 500)
-						: yScale(level.min - 1) - margin.top}
-					fill={level.color}
-					opacity=".7"
-				/>
-			{/if}
-		{/each}
-	</g>
-
-	<!-- Raw Data for Selected Dataset -->
-	{#if showRaw}
+<div style="position: relative;">
+	<svg
+		{width}
+		{height}
+		role="img"
+		onmousemove={(e) => {
+			// Update mouse coordinates relative to the SVG container
+			mouseX = e.offsetX;
+			mouseY = e.offsetY;
+		}}
+	>
+		<!-- Quality Level Background Colors -->
 		<g>
-			{#each data[selectedDataset] as item}
-				<circle
-					cx={xScale(item.timestamp)}
-					cy={yScale(item.usAqi)}
-					r="1.5"
-					fill="blue"
-					opacity="0.7"
+			{#each qualityLevels as level}
+				{#if yScale(level.min) > margin.top}
+					<rect
+						x={margin.left}
+						width={width - margin.left - margin.right}
+						y={yScale(level.max ?? 500) > margin.top ? yScale(level.max ?? 500) : margin.top}
+						height={yScale(level.max ?? 500) > margin.top
+							? yScale(level.min - 1) - yScale(level.max ?? 500)
+							: yScale(level.min - 1) - margin.top}
+						fill={level.color}
+						opacity=".7"
+					/>
+				{/if}
+			{/each}
+		</g>
+
+		<!-- Raw Data for Selected Dataset -->
+		{#if showRaw}
+			<g>
+				{#each data[selectedDataset] as item}
+					<circle
+						cx={xScale(item.timestamp)}
+						cy={yScale(item.usAqi)}
+						r="1.5"
+						fill="blue"
+						opacity="0.7"
+					/>
+				{/each}
+			</g>
+		{/if}
+
+		<!-- Selected Percentile Area -->
+		<path d={selectedArea?.cityArea} fill="black" opacity="0.1" />
+
+		<!-- Average Lines for All Datasets -->
+		{#each averageLines as averageLine}
+			{@const isHovered = averageLine.name === hoveredDataset}
+			{@const isSelected = averageLine.name === selectedDataset}
+
+			<path
+				d={averageLine.cityLine}
+				fill="none"
+				stroke={isHovered ? 'blue' : isSelected ? 'black' : 'grey'}
+				stroke-width={isSelected ? '1.5' : isHovered ? '1.5' : '1'}
+				opacity={isSelected || isHovered ? '1' : '0.7'}
+			/>
+		{/each}
+
+		<!-- Invisible Paths for Interaction -->
+		<g>
+			{#each averageLines as averageLine (averageLine.name)}
+				<path
+					d={averageLine.cityLine}
+					fill="none"
+					stroke="transparent"
+					stroke-width="4"
+					style="pointer-events: stroke; cursor: pointer;"
+					role="button"
+					tabindex="0"
+					onclick={() => {
+						selectedDataset = averageLine.name;
+					}}
+					onmouseenter={() => {
+						hoveredDataset = averageLine.name;
+					}}
+					onmouseleave={() => {
+						hoveredDataset = null;
+					}}
+					onkeydown={(e) => {
+						if (e.key === 'Enter' || e.key === ' ') {
+							selectedDataset = averageLine.name;
+						}
+					}}
 				/>
 			{/each}
 		</g>
+
+		<!-- Axes and Gridlines -->
+		<g class="x-axis" transform="translate(0, {height - margin.bottom})" bind:this={xAxisRef}></g>
+		<g class="y-axis" transform="translate({margin.left}, 0)" bind:this={yAxisRef}></g>
+		<g
+			class="y-axis-grid"
+			transform="translate({margin.left}, 0)"
+			bind:this={yAxisGridRef}
+			style="color:black; opacity:0.2;"
+		></g>
+	</svg>
+
+	<!-- Tooltip -->
+	{#if hoveredDataset}
+		<div
+			style="
+			position: absolute;
+			left: {mouseX + 10}px;
+			top: {mouseY - 20}px;
+			pointer-events: none;"
+			class="rounded bg-white/90 px-1 border shadow-lg"
+		>
+			{hoveredDataset}
+		</div>
 	{/if}
-
-	<!-- Selected Percentile Area -->
-	<path d={selectedArea?.cityArea} fill="black" opacity="0.1" />
-
-	<!-- Unselected Average Lines -->
-	{#each averageLines as averageLine}
-		{#if averageLine.name !== selectedDataset}
-			<path d={averageLine.cityLine} fill="none" stroke="grey" stroke-width="1" />
-		{/if}
-	{/each}
-
-	<!-- Selected Average Line, separated to draw last -->
-	<path d={selectedLine?.cityLine} fill="none" stroke="black" stroke-width="1.5" />
-
-	<!-- Axes and Gridlines -->
-	<g class="x-axis" transform="translate(0, {height - margin.bottom})" bind:this={xAxisRef}></g>
-	<g class="y-axis" transform="translate({margin.left}, 0)" bind:this={yAxisRef}></g>
-	<g
-		class="y-axis-grid"
-		transform="translate({margin.left}, 0)"
-		bind:this={yAxisGridRef}
-		style="color:black; opacity:0.2;"
-	></g>
-</svg>
+</div>
