@@ -53,7 +53,7 @@
 	});
 </script>
 
-<div class="mb-4 flex items-center justify-center gap-4">
+<div class="mb-4 mt-5 flex items-center justify-center gap-4">
 	<h2>AQI Chart for:</h2>
 
 	<select class="select select-lg select-accent" bind:value={selectedDataset}>
@@ -86,5 +86,9 @@
 <style>
 	* {
 		font-family: sans-serif;
+	}
+
+	h2 {
+		font-size: 1.5rem;
 	}
 </style>

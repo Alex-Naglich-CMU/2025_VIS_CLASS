@@ -27,7 +27,7 @@
 	//	let width = $derived(innerWidth < 800 ? innerWidth - 20 : 800);
 	let width = $state(800);
 	let height = $derived(width * 0.6);
-	let margin = $state({ top: 80, right: 20, bottom: 20, left: 40 });
+	let margin = $state({ top: 30, right: 20, bottom: 40, left: 40 });
 	let showRaw = $state(false);
 
 	let xScale = $derived(
