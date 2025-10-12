@@ -271,7 +271,7 @@
 					d={averageLine.cityLine}
 					fill="none"
 					stroke="transparent"
-					stroke-width="4"
+					stroke-width="6"
 					style="pointer-events: stroke; cursor: pointer;"
 					role="button"
 					tabindex="0"
