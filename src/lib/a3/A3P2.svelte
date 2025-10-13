@@ -1,6 +1,7 @@
 <script lang="ts">
 	import * as d3 from 'd3';
 	import qualityLevels from '$lib/a3/qualityLevels.json';
+	import { derived } from 'svelte/store';
 
 	// Data Type Definitions
 	type DataByDataset = Record<string, Item[]>;
@@ -37,8 +38,10 @@
 	let showRaw = $state(false);
 	let selectedDataset: keyof typeof data = $state('Avalon');
 	let hoveredDataset: string | null = $state(null);
+	let hoveredTooltip: string | null = $state(null);
 	let mouseX = $state(0);
 	let mouseY = $state(0);
+	let zoomLevel = $state(1);
 
 	// Scales
 	let baseXScale = $derived(
@@ -140,8 +143,6 @@
 		})
 	);
 
-	let selectedLine = $derived(averageLines.find((d) => d.name === selectedDataset));
-
 	// Percentile Areas
 	let percentileArea = $derived(
 		monthlyStats.map(({ name, monthlyStatsForEachCity }) => {
@@ -179,6 +180,9 @@
 			if (xAxisRef) {
 				d3.select(xAxisRef).call(xAxis);
 			}
+
+			// Update zoom level state
+			zoomLevel = event.transform.k;
 		};
 
 		// Instantiating zoom behavior
@@ -193,6 +197,29 @@
 
 		// Applying zoom behavior to the SVG
 		d3.select(svgRef).call(zoomBehavior);
+	});
+
+	// Nearest Data Point
+	let nearestDataPoint = $derived(() => {
+		let xPos = mouseX;
+		let yPos = mouseY;
+
+		let hoveredMonthlyStats: MonthlyStat[] =
+			monthlyStats.find((d) => d.name === hoveredDataset)?.monthlyStatsForEachCity ?? [];
+		let closestPoint: MonthlyStat = hoveredMonthlyStats[0];
+		let closestDistance = Infinity;
+
+		hoveredMonthlyStats.forEach((d) => {
+			const midpointTime = (d.dateRange[0].getTime() + d.dateRange[1].getTime()) / 2;
+			let x = xScale(new Date(midpointTime));
+			let y = yScale(d.averageAqi);
+			let distance = Math.hypot(x - xPos, y - yPos);
+			if (closestPoint === null || distance < closestDistance) {
+				closestPoint = d;
+				closestDistance = distance;
+			}
+		});
+		return closestPoint;
 	});
 </script>
 
@@ -265,7 +292,7 @@
 			</clipPath>
 		</defs>
 
-		<!-- Data Drawing Layer to apply clipping -->
+		<!-- Data Drawing Elements group to apply clipping -->
 		<g clip-path="url(#plot-clip)">
 			<!-- Quality Level Background Colors -->
 			<g>
@@ -292,16 +319,25 @@
 						<circle
 							cx={xScale(item.timestamp)}
 							cy={yScale(item.usAqi)}
-							r="1.5"
+							r={0.5 + zoomLevel}
 							fill="blue"
 							opacity="0.7"
+							role="img"
+							onmouseenter={() => {
+								hoveredTooltip = `AQI: ${item.usAqi} <br> 
+													Date: ${item.timestamp.toISOString().split('T')[0]} <br>
+													Station: ${item.stationName}`;
+							}}
+							onmouseleave={() => {
+								hoveredTooltip = null;
+							}}
 						/>
 					{/each}
 				</g>
 			{/if}
 
 			<!-- Selected Percentile Area -->
-			<path d={selectedArea?.cityArea} fill="black" opacity="0.1" />
+			<path d={selectedArea?.cityArea} fill="black" opacity="0.1" style="pointer-events: none;" />
 
 			<!-- Average Lines for All Datasets -->
 			{#each averageLines as averageLine}
@@ -312,7 +348,7 @@
 					d={averageLine.cityLine}
 					fill="none"
 					stroke={isHovered ? 'blue' : isSelected ? 'black' : 'grey'}
-					stroke-width={isSelected ? '1.5' : isHovered ? '1.5' : '1'}
+					stroke-width={(isSelected ? 1.5 : isHovered ? 1.5 : 1) * zoomLevel}
 					opacity={isSelected || isHovered ? '1' : '0.7'}
 				/>
 			{/each}
@@ -324,7 +360,7 @@
 						d={averageLine.cityLine}
 						fill="none"
 						stroke="transparent"
-						stroke-width="6"
+						stroke-width={6 + zoomLevel}
 						style="pointer-events: stroke; cursor: pointer;"
 						role="button"
 						tabindex="0"
@@ -333,9 +369,15 @@
 						}}
 						onmouseenter={() => {
 							hoveredDataset = averageLine.name;
+							hoveredTooltip = `<center>
+												<span style="text-decoration: underline;">---${averageLine.name}---</span> <br> 
+												Mean AQI in <strong>${d3.timeFormat('%b %Y')(nearestDataPoint().dateRange[0])}</strong>:<br>
+												<span style="font-size: large;">${nearestDataPoint().averageAqi.toPrecision(3)}</span>
+											</center>`;
 						}}
 						onmouseleave={() => {
 							hoveredDataset = null;
+							hoveredTooltip = null;
 						}}
 						onkeydown={(e) => {
 							if (e.key === 'Enter' || e.key === ' ') {
@@ -359,7 +401,7 @@
 	</svg>
 
 	<!-- Tooltip -->
-	{#if hoveredDataset}
+	{#if hoveredTooltip}
 		<div
 			style="
 			position: absolute;
@@ -368,7 +410,7 @@
 			pointer-events: none;"
 			class="rounded border bg-white/90 px-1 shadow-lg"
 		>
-			{hoveredDataset}
+			{@html hoveredTooltip}
 		</div>
 	{/if}
 </div>
