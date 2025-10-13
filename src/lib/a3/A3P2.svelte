@@ -319,9 +319,9 @@
 						<circle
 							cx={xScale(item.timestamp)}
 							cy={yScale(item.usAqi)}
-							r={0.5 + zoomLevel}
+							r={.5 + zoomLevel}
 							fill="blue"
-							opacity="0.7"
+							opacity="0.5"
 							role="img"
 							onmouseenter={() => {
 								hoveredTooltip = `AQI: ${item.usAqi} <br> 
@@ -337,7 +337,7 @@
 			{/if}
 
 			<!-- Selected Percentile Area -->
-			<path d={selectedArea?.cityArea} fill="black" opacity="0.1" style="pointer-events: none;" />
+			<path d={selectedArea?.cityArea} fill="black" opacity="0.2" style="pointer-events: none;" />
 
 			<!-- Average Lines for All Datasets -->
 			{#each averageLines as averageLine}
@@ -348,7 +348,7 @@
 					d={averageLine.cityLine}
 					fill="none"
 					stroke={isHovered ? 'blue' : isSelected ? 'black' : 'grey'}
-					stroke-width={(isSelected ? 1.5 : isHovered ? 1.5 : 1) * zoomLevel}
+					stroke-width={(isSelected ? 2.5 : isHovered ? 1.5 : 1) * zoomLevel}
 					opacity={isSelected || isHovered ? '1' : '0.7'}
 				/>
 			{/each}
@@ -360,7 +360,7 @@
 						d={averageLine.cityLine}
 						fill="none"
 						stroke="transparent"
-						stroke-width={6 + zoomLevel}
+						stroke-width={10 + zoomLevel}
 						style="pointer-events: stroke; cursor: pointer;"
 						role="button"
 						tabindex="0"
@@ -371,7 +371,7 @@
 							hoveredDataset = averageLine.name;
 							hoveredTooltip = `<center>
 												<span style="text-decoration: underline;">---${averageLine.name}---</span> <br> 
-												Mean AQI in <strong>${d3.timeFormat('%b %Y')(nearestDataPoint().dateRange[0])}</strong>:<br>
+												Mean AQI in <strong>${d3.timeFormat('%b %Y')(nearestDataPoint().dateRange[1])}</strong>:<br>
 												<span style="font-size: large;">${nearestDataPoint().averageAqi.toPrecision(3)}</span>
 											</center>`;
 						}}
@@ -386,6 +386,27 @@
 						}}
 					/>
 				{/each}
+			</g>
+
+			<!-- Closest Datapoint -->
+			<g>
+				{#if hoveredDataset && nearestDataPoint}
+					<circle
+						cx={xScale(
+							new Date(
+								(nearestDataPoint().dateRange[0].getTime() +
+									nearestDataPoint().dateRange[1].getTime()) /
+									2
+							)
+						)}
+						cy={yScale(nearestDataPoint().averageAqi)}
+						r={5 + zoomLevel}
+						fill="orange"
+						stroke="red"
+						stroke-width="1"
+						opacity="0.8"
+					/>
+				{/if}
 			</g>
 		</g>
 
