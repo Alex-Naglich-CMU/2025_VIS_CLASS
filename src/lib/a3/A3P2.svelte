@@ -41,7 +41,7 @@
 	let mouseY = $state(0);
 
 	// Scales
-	let xScale = $derived(
+	let baseXScale = $derived(
 		d3
 			.scaleTime()
 			.domain([
@@ -51,12 +51,16 @@
 			.range([margin.left, width - margin.right])
 	);
 
-	let yScale = $derived(
+	let baseYScale = $derived(
 		d3
 			.scaleLinear()
 			.domain([0, d3.max(flatData, (d) => d.usAqi) ?? 500])
 			.range([height - margin.bottom, margin.top])
 	);
+
+	// This layer of abstraction fixed an issue I had where zooming would reset the base and allow infinite zoom in but no zoom out with extent [1,10].
+	let xScale = $derived(baseXScale);
+	let yScale = $derived(baseYScale);
 
 	// Axes
 	let xAxis = $derived(d3.axisBottom(xScale));
@@ -65,7 +69,7 @@
 		d3
 			.axisLeft(yScale)
 			.tickSize(-(width - margin.left - margin.right))
-			.tickFormat(null)
+			.tickFormat(() => '')
 	);
 
 	// References to the SVG groups for axes
@@ -156,6 +160,40 @@
 	);
 
 	let selectedArea = $derived(percentileArea.find((d) => d.name === selectedDataset));
+
+	// Zoom Behavior
+	let svgRef: SVGSVGElement;
+	$effect(() => {
+		if (!svgRef) return;
+
+		// The function to call upon zooming
+		const zoomed = (event: any) => {
+			yScale = event.transform.rescaleY(baseYScale);
+			yAxis = d3.axisLeft(yScale);
+			if (yAxisRef) {
+				d3.select(yAxisRef).call(yAxis);
+			}
+
+			xScale = event.transform.rescaleX(baseXScale);
+			xAxis = d3.axisBottom(xScale);
+			if (xAxisRef) {
+				d3.select(xAxisRef).call(xAxis);
+			}
+		};
+
+		// Instantiating zoom behavior
+		const zoomBehavior = d3
+			.zoom<SVGSVGElement, unknown>()
+			.scaleExtent([1, 10])
+			.translateExtent([
+				[0, 0],
+				[width, height]
+			])
+			.on('zoom', zoomed); // SVG SVG Element, wild type name.
+
+		// Applying zoom behavior to the SVG
+		d3.select(svgRef).call(zoomBehavior);
+	});
 </script>
 
 <svelte:window bind:innerWidth />
@@ -208,89 +246,105 @@
 		{width}
 		{height}
 		role="img"
+		bind:this={svgRef}
 		onmousemove={(e) => {
 			// Update mouse coordinates relative to the SVG container
 			mouseX = e.offsetX;
 			mouseY = e.offsetY;
 		}}
 	>
-		<!-- Quality Level Background Colors -->
-		<g>
-			{#each qualityLevels as level}
-				{#if yScale(level.min) > margin.top}
-					<rect
-						x={margin.left}
-						width={width - margin.left - margin.right}
-						y={yScale(level.max ?? 500) > margin.top ? yScale(level.max ?? 500) : margin.top}
-						height={yScale(level.max ?? 500) > margin.top
-							? yScale(level.min - 1) - yScale(level.max ?? 500)
-							: yScale(level.min - 1) - margin.top}
-						fill={level.color}
-						opacity=".7"
-					/>
-				{/if}
-			{/each}
-		</g>
+		<!-- Clipping Path Definition -->
+		<defs>
+			<clipPath id="plot-clip">
+				<rect
+					x={margin.left}
+					y={margin.top}
+					width={width - margin.left - margin.right}
+					height={height - margin.top - margin.bottom}
+				/>
+			</clipPath>
+		</defs>
 
-		<!-- Raw Data for Selected Dataset -->
-		{#if showRaw}
+		<!-- Data Drawing Layer to apply clipping -->
+		<g clip-path="url(#plot-clip)">
+			<!-- Quality Level Background Colors -->
 			<g>
-				{#each data[selectedDataset] as item}
-					<circle
-						cx={xScale(item.timestamp)}
-						cy={yScale(item.usAqi)}
-						r="1.5"
-						fill="blue"
-						opacity="0.7"
-					/>
+				{#each qualityLevels as level}
+					{#if yScale(level.min) > margin.top}
+						<rect
+							x={margin.left}
+							width={width - margin.left - margin.right}
+							y={yScale(level.max ?? 500) > margin.top ? yScale(level.max ?? 500) : margin.top}
+							height={yScale(level.max ?? 500) > margin.top
+								? yScale(level.min - 1) - yScale(level.max ?? 500)
+								: yScale(level.min - 1) - margin.top}
+							fill={level.color}
+							opacity=".7"
+						/>
+					{/if}
 				{/each}
 			</g>
-		{/if}
 
-		<!-- Selected Percentile Area -->
-		<path d={selectedArea?.cityArea} fill="black" opacity="0.1" />
+			<!-- Raw Data for Selected Dataset -->
+			{#if showRaw}
+				<g>
+					{#each data[selectedDataset] as item}
+						<circle
+							cx={xScale(item.timestamp)}
+							cy={yScale(item.usAqi)}
+							r="1.5"
+							fill="blue"
+							opacity="0.7"
+						/>
+					{/each}
+				</g>
+			{/if}
 
-		<!-- Average Lines for All Datasets -->
-		{#each averageLines as averageLine}
-			{@const isHovered = averageLine.name === hoveredDataset}
-			{@const isSelected = averageLine.name === selectedDataset}
+			<!-- Selected Percentile Area -->
+			<path d={selectedArea?.cityArea} fill="black" opacity="0.1" />
 
-			<path
-				d={averageLine.cityLine}
-				fill="none"
-				stroke={isHovered ? 'blue' : isSelected ? 'black' : 'grey'}
-				stroke-width={isSelected ? '1.5' : isHovered ? '1.5' : '1'}
-				opacity={isSelected || isHovered ? '1' : '0.7'}
-			/>
-		{/each}
+			<!-- Average Lines for All Datasets -->
+			{#each averageLines as averageLine}
+				{@const isHovered = averageLine.name === hoveredDataset}
+				{@const isSelected = averageLine.name === selectedDataset}
 
-		<!-- Invisible Paths for Interaction -->
-		<g>
-			{#each averageLines as averageLine (averageLine.name)}
 				<path
 					d={averageLine.cityLine}
 					fill="none"
-					stroke="transparent"
-					stroke-width="6"
-					style="pointer-events: stroke; cursor: pointer;"
-					role="button"
-					tabindex="0"
-					onclick={() => {
-						selectedDataset = averageLine.name;
-					}}
-					onmouseenter={() => {
-						hoveredDataset = averageLine.name;
-					}}
-					onmouseleave={() => {
-						hoveredDataset = null;
-					}}
-					onkeydown={(e) => {
-						if (e.key === 'Enter' || e.key === ' ') {
-							selectedDataset = averageLine.name;
-						}
-					}}
+					stroke={isHovered ? 'blue' : isSelected ? 'black' : 'grey'}
+					stroke-width={isSelected ? '1.5' : isHovered ? '1.5' : '1'}
+					opacity={isSelected || isHovered ? '1' : '0.7'}
 				/>
 			{/each}
+
+			<!-- Invisible Paths for Interaction -->
+			<g>
+				{#each averageLines as averageLine (averageLine.name)}
+					<path
+						d={averageLine.cityLine}
+						fill="none"
+						stroke="transparent"
+						stroke-width="6"
+						style="pointer-events: stroke; cursor: pointer;"
+						role="button"
+						tabindex="0"
+						onclick={() => {
+							selectedDataset = averageLine.name;
+						}}
+						onmouseenter={() => {
+							hoveredDataset = averageLine.name;
+						}}
+						onmouseleave={() => {
+							hoveredDataset = null;
+						}}
+						onkeydown={(e) => {
+							if (e.key === 'Enter' || e.key === ' ') {
+								selectedDataset = averageLine.name;
+							}
+						}}
+					/>
+				{/each}
+			</g>
 		</g>
 
 		<!-- Axes and Gridlines -->
@@ -312,7 +366,7 @@
 			left: {mouseX + 10}px;
 			top: {mouseY - 20}px;
 			pointer-events: none;"
-			class="rounded bg-white/90 px-1 border shadow-lg"
+			class="rounded border bg-white/90 px-1 shadow-lg"
 		>
 			{hoveredDataset}
 		</div>
