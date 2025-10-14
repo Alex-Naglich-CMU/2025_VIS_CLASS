@@ -10,9 +10,6 @@
 	<div class="flex justify-center gap-4">
 		<a class="btn btn-primary" href={resolve('/assignments/a3/part1')}>Part 1</a>
 		<a class="btn btn-primary" href={resolve('/assignments/a3/part2')}>Part 2</a>
-		<a class="btn btn-primary text-green-600 bg-gray-600" href={resolve('/assignments/a3/report')}>Part 3</a>
+		<a class="btn btn-primary" href={resolve('/assignments/a3/report')}>Report</a>
 	</div>
-	<small style="opacity:.1;"
-		>Certainly neither of the options is <i> poisoned</i> or anything...</small
-	>
 </div>

@@ -370,7 +370,7 @@
 					fill="none"
 					stroke={isHovered ? 'blue' : isSelected ? 'black' : 'grey'}
 					stroke-width={(isSelected ? 2.5 : isHovered ? 1.5 : 1) * zoomLevel}
-					opacity={isSelected || isHovered ? '1' : '0.7'}
+					opacity="1"
 				/>
 
 				<!-- Endpoint Circles -->
