@@ -319,7 +319,7 @@
 						<circle
 							cx={xScale(item.timestamp)}
 							cy={yScale(item.usAqi)}
-							r={.5 + zoomLevel}
+							r={0.5 + zoomLevel}
 							fill="blue"
 							opacity="0.5"
 							role="img"
@@ -343,6 +343,7 @@
 			{#each averageLines as averageLine}
 				{@const isHovered = averageLine.name === hoveredDataset}
 				{@const isSelected = averageLine.name === selectedDataset}
+				{@const monthlyStat = monthlyStats.find((d) => d.name === averageLine.name)?.monthlyStatsForEachCity ?? []}
 
 				<path
 					d={averageLine.cityLine}
@@ -350,6 +351,38 @@
 					stroke={isHovered ? 'blue' : isSelected ? 'black' : 'grey'}
 					stroke-width={(isSelected ? 2.5 : isHovered ? 1.5 : 1) * zoomLevel}
 					opacity={isSelected || isHovered ? '1' : '0.7'}
+				/>
+
+				<!-- Endpoint Circles -->
+				<circle
+					cx={xScale(
+						new Date(
+							(monthlyStat[0].dateRange[0].getTime() +
+								monthlyStat[0].dateRange[1].getTime()) /
+								2
+						)
+					)}
+					cy={yScale(monthlyStat[0]?.averageAqi ?? 0)}
+					r={isSelected ? 2 + zoomLevel : 1 + zoomLevel}
+					fill={isSelected ? 'black' : 'grey'}
+					stroke="black"
+					stroke-width=".5"
+					opacity="0.8"
+				/>
+				<circle
+					cx={xScale(
+						new Date(
+							(monthlyStat[monthlyStat.length-1].dateRange[0].getTime() +
+								monthlyStat[monthlyStat.length-1].dateRange[1].getTime()) /
+								2
+						)
+					)}
+					cy={yScale(monthlyStat[monthlyStat.length-1]?.averageAqi ?? 0)}
+					r={isSelected ? 2 + zoomLevel : 1 + zoomLevel}
+					fill={isSelected ? 'black' : 'grey'}
+					stroke="black"
+					stroke-width=".5"
+					opacity="0.8"
 				/>
 			{/each}
 
