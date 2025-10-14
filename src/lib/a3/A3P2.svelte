@@ -417,7 +417,7 @@
 			class="y-axis-grid"
 			transform="translate({margin.left}, 0)"
 			bind:this={yAxisGridRef}
-			style="color:black; opacity:0.2;"
+			style="color:black; opacity:.6;"
 		></g>
 	</svg>
 
