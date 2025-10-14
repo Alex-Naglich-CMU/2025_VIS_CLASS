@@ -240,7 +240,10 @@
 
 	<div class="flex flex-col gap-2">
 		<!-- Dataset Selector -->
-		<select class="select h-6 w-35 select-md py-0 select-accent truncate block" bind:value={selectedDataset}>
+		<select
+			class="select block h-6 w-35 truncate select-md py-0 select-accent"
+			bind:value={selectedDataset}
+		>
 			{#await datasetNames}
 				<!-- promise is pending -->
 				<option disabled selected>Loading datasets...</option>
@@ -296,6 +299,14 @@
 		<g clip-path="url(#plot-clip)">
 			<!-- Quality Level Background Colors -->
 			<g>
+				<!-- White Background to ensure consistency -->
+				<rect
+					x={margin.left}
+					y={margin.top}
+					width={width - margin.left - margin.right}
+					height={height - margin.top - margin.bottom}
+					fill="white"
+				/>
 				{#each qualityLevels as level}
 					{#if yScale(level.min) > margin.top}
 						<rect
@@ -311,6 +322,14 @@
 					{/if}
 				{/each}
 			</g>
+
+			<!-- Gridlines, up here to ensure they draw below everything selectable -->
+			<g
+				class="y-axis-grid"
+				transform="translate({margin.left}, 0)"
+				bind:this={yAxisGridRef}
+				style="color:black; opacity:.6;"
+			></g>
 
 			<!-- Raw Data for Selected Dataset -->
 			{#if showRaw}
@@ -343,7 +362,8 @@
 			{#each averageLines as averageLine}
 				{@const isHovered = averageLine.name === hoveredDataset}
 				{@const isSelected = averageLine.name === selectedDataset}
-				{@const monthlyStat = monthlyStats.find((d) => d.name === averageLine.name)?.monthlyStatsForEachCity ?? []}
+				{@const monthlyStat =
+					monthlyStats.find((d) => d.name === averageLine.name)?.monthlyStatsForEachCity ?? []}
 
 				<path
 					d={averageLine.cityLine}
@@ -357,9 +377,7 @@
 				<circle
 					cx={xScale(
 						new Date(
-							(monthlyStat[0].dateRange[0].getTime() +
-								monthlyStat[0].dateRange[1].getTime()) /
-								2
+							(monthlyStat[0].dateRange[0].getTime() + monthlyStat[0].dateRange[1].getTime()) / 2
 						)
 					)}
 					cy={yScale(monthlyStat[0]?.averageAqi ?? 0)}
@@ -372,12 +390,12 @@
 				<circle
 					cx={xScale(
 						new Date(
-							(monthlyStat[monthlyStat.length-1].dateRange[0].getTime() +
-								monthlyStat[monthlyStat.length-1].dateRange[1].getTime()) /
+							(monthlyStat[monthlyStat.length - 1].dateRange[0].getTime() +
+								monthlyStat[monthlyStat.length - 1].dateRange[1].getTime()) /
 								2
 						)
 					)}
-					cy={yScale(monthlyStat[monthlyStat.length-1]?.averageAqi ?? 0)}
+					cy={yScale(monthlyStat[monthlyStat.length - 1]?.averageAqi ?? 0)}
 					r={isSelected ? 2 + zoomLevel : 1 + zoomLevel}
 					fill={isSelected ? 'black' : 'grey'}
 					stroke="black"
@@ -385,6 +403,28 @@
 					opacity="0.8"
 				/>
 			{/each}
+
+			<!-- Closest Datapoint -->
+			<!-- Below the invisible selecting lines because it was blocking their usage! -->
+			<g>
+				{#if hoveredDataset && nearestDataPoint}
+					<circle
+						cx={xScale(
+							new Date(
+								(nearestDataPoint().dateRange[0].getTime() +
+									nearestDataPoint().dateRange[1].getTime()) /
+									2
+							)
+						)}
+						cy={yScale(nearestDataPoint().averageAqi)}
+						r={5 + zoomLevel}
+						fill="orange"
+						stroke="red"
+						stroke-width="1"
+						opacity="0.8"
+					/>
+				{/if}
+			</g>
 
 			<!-- Invisible Paths for Interaction -->
 			<g>
@@ -420,38 +460,11 @@
 					/>
 				{/each}
 			</g>
-
-			<!-- Closest Datapoint -->
-			<g>
-				{#if hoveredDataset && nearestDataPoint}
-					<circle
-						cx={xScale(
-							new Date(
-								(nearestDataPoint().dateRange[0].getTime() +
-									nearestDataPoint().dateRange[1].getTime()) /
-									2
-							)
-						)}
-						cy={yScale(nearestDataPoint().averageAqi)}
-						r={5 + zoomLevel}
-						fill="orange"
-						stroke="red"
-						stroke-width="1"
-						opacity="0.8"
-					/>
-				{/if}
-			</g>
 		</g>
 
 		<!-- Axes and Gridlines -->
 		<g class="x-axis" transform="translate(0, {height - margin.bottom})" bind:this={xAxisRef}></g>
 		<g class="y-axis" transform="translate({margin.left}, 0)" bind:this={yAxisRef}></g>
-		<g
-			class="y-axis-grid"
-			transform="translate({margin.left}, 0)"
-			bind:this={yAxisGridRef}
-			style="color:black; opacity:.6;"
-		></g>
 	</svg>
 
 	<!-- Tooltip -->
@@ -462,7 +475,7 @@
 			left: {mouseX + 10}px;
 			top: {mouseY - 20}px;
 			pointer-events: none;"
-			class="rounded border bg-white/90 px-1 shadow-lg"
+			class="rounded border text-black bg-white/90 px-1 shadow-lg"
 		>
 			{@html hoveredTooltip}
 		</div>
