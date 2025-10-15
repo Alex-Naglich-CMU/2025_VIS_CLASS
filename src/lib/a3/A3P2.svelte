@@ -36,7 +36,7 @@
 	let height = $derived(width * 0.6);
 	let margin = $state({ top: 20, right: 20, bottom: 40, left: 40 });
 	let showRaw = $state(false);
-	let selectedDataset: keyof typeof data = $state('Avalon');
+	let selectedDataset: keyof typeof data = $state('Liberty (SAHS)');
 	let hoveredDataset: string | null = $state(null);
 	let hoveredTooltip: string | null = $state(null);
 	let mouseX = $state(0);
@@ -267,171 +267,182 @@
 	</div>
 </div>
 
-<!-- SVG Container -->
-<div style="position: relative;">
-	<svg
-		{width}
-		{height}
-		role="img"
-		bind:this={svgRef}
-		onmousemove={(e) => {
-			// Update mouse coordinates relative to the SVG container
-			mouseX = e.offsetX;
-			mouseY = e.offsetY;
-		}}
-	>
-		<!-- Clipping Path Definition -->
-		<defs>
-			<clipPath id="plot-clip">
-				<rect
-					x={margin.left}
-					y={margin.top}
-					width={width - margin.left - margin.right}
-					height={height - margin.top - margin.bottom}
-				/>
-			</clipPath>
-		</defs>
+<!-- Body Below Header-->
+<div class="flex gap-4">
+	<!-- SVG Container -->
+	<div style="position: relative;">
+		<svg
+			{width}
+			{height}
+			role="img"
+			bind:this={svgRef}
+			onmousemove={(e) => {
+				// Update mouse coordinates relative to the SVG container
+				mouseX = e.offsetX;
+				mouseY = e.offsetY;
+			}}
+		>
+			<!-- Clipping Path Definition -->
+			<defs>
+				<clipPath id="plot-clip">
+					<rect
+						x={margin.left}
+						y={margin.top}
+						width={width - margin.left - margin.right}
+						height={height - margin.top - margin.bottom}
+					/>
+				</clipPath>
+			</defs>
 
-		<!-- Data Drawing Elements group to apply clipping -->
-		<g clip-path="url(#plot-clip)">
-			<!-- Quality Level Background Colors -->
-			<g>
-				{#each qualityLevels as level}
-					{#if yScale(level.min) > margin.top}
-						<rect
-							x={margin.left}
-							width={width - margin.left - margin.right}
-							y={yScale(level.max ?? 500) > margin.top ? yScale(level.max ?? 500) : margin.top}
-							height={yScale(level.max ?? 500) > margin.top
-								? yScale(level.min - 1) - yScale(level.max ?? 500)
-								: yScale(level.min - 1) - margin.top}
-							fill={level.color}
-							opacity=".7"
-						/>
-					{/if}
-				{/each}
-			</g>
-
-			<!-- Raw Data for Selected Dataset -->
-			{#if showRaw}
+			<!-- Data Drawing Elements group to apply clipping -->
+			<g clip-path="url(#plot-clip)">
+				<!-- Quality Level Background Colors -->
 				<g>
-					{#each data[selectedDataset] as item}
-						<circle
-							cx={xScale(item.timestamp)}
-							cy={yScale(item.usAqi)}
-							r={.5 + zoomLevel}
-							fill="blue"
-							opacity="0.5"
-							role="img"
-							onmouseenter={() => {
-								hoveredTooltip = `AQI: ${item.usAqi} <br> 
-													Date: ${item.timestamp.toISOString().split('T')[0]} <br>
-													Station: ${item.stationName}`;
-							}}
-							onmouseleave={() => {
-								hoveredTooltip = null;
-							}}
-						/>
+					{#each qualityLevels as level}
+						{#if yScale(level.min) > margin.top}
+							<rect
+								x={margin.left}
+								width={width - margin.left - margin.right}
+								y={yScale(level.max ?? 500) > margin.top ? yScale(level.max ?? 500) : margin.top}
+								height={yScale(level.max ?? 500) > margin.top
+									? yScale(level.min - 1) - yScale(level.max ?? 500)
+									: yScale(level.min - 1) - margin.top}
+								fill={level.color}
+								opacity=".7"
+							/>
+						{/if}
 					{/each}
 				</g>
-			{/if}
 
-			<!-- Selected Percentile Area -->
-			<path d={selectedArea?.cityArea} fill="black" opacity="0.2" style="pointer-events: none;" />
+				<!-- Raw Data for Selected Dataset -->
+				{#if showRaw}
+					<g>
+						{#each data[selectedDataset] as item}
+							<circle
+								cx={xScale(item.timestamp)}
+								cy={yScale(item.usAqi)}
+								r={0.5 + zoomLevel}
+								fill="blue"
+								opacity="0.5"
+								role="img"
+								onmouseenter={() => {
+									hoveredTooltip = `AQI: ${item.usAqi} <br> 
+													Date: ${item.timestamp.toISOString().split('T')[0]} <br>
+													Station: ${item.stationName}`;
+								}}
+								onmouseleave={() => {
+									hoveredTooltip = null;
+								}}
+							/>
+						{/each}
+					</g>
+				{/if}
 
-			<!-- Average Lines for All Datasets -->
-			{#each averageLines as averageLine}
-				{@const isHovered = averageLine.name === hoveredDataset}
-				{@const isSelected = averageLine.name === selectedDataset}
+				<!-- Selected Percentile Area -->
+				<path d={selectedArea?.cityArea} fill="black" opacity="0.2" style="pointer-events: none;" />
 
-				<path
-					d={averageLine.cityLine}
-					fill="none"
-					stroke={isHovered ? 'blue' : isSelected ? 'black' : 'grey'}
-					stroke-width={(isSelected ? 2.5 : isHovered ? 1.5 : 1) * zoomLevel}
-					opacity={isSelected || isHovered ? '1' : '0.7'}
-				/>
-			{/each}
+				<!-- Average Lines for All Datasets -->
+				{#each averageLines as averageLine}
+					{@const isHovered = averageLine.name === hoveredDataset}
+					{@const isSelected = averageLine.name === selectedDataset}
 
-			<!-- Invisible Paths for Interaction -->
-			<g>
-				{#each averageLines as averageLine (averageLine.name)}
 					<path
 						d={averageLine.cityLine}
 						fill="none"
-						stroke="transparent"
-						stroke-width={10 + zoomLevel}
-						style="pointer-events: stroke; cursor: pointer;"
-						role="button"
-						tabindex="0"
-						onclick={() => {
-							selectedDataset = averageLine.name;
-						}}
-						onmouseenter={() => {
-							hoveredDataset = averageLine.name;
-							hoveredTooltip = `<center>
+						style="pointer-events: none;"
+						stroke={isHovered ? 'blue' : isSelected ? 'black' : 'grey'}
+						stroke-width={(isSelected ? 2.5 : isHovered ? 1.5 : 1) * zoomLevel}
+						opacity={isSelected || isHovered ? '1' : '0.7'}
+					/>
+				{/each}
+
+				<!-- Invisible Paths for Interaction -->
+				<g>
+					{#each averageLines as averageLine (averageLine.name)}
+						<path
+							d={averageLine.cityLine}
+							fill="none"
+							stroke="transparent"
+							stroke-width={10 + zoomLevel}
+							style="pointer-events: stroke; cursor: pointer;"
+							role="button"
+							tabindex="0"
+							onclick={() => {
+								selectedDataset = averageLine.name;
+							}}
+							onmouseenter={() => {
+								hoveredDataset = averageLine.name;
+								hoveredTooltip = `<center>
 												<span style="text-decoration: underline;">---${averageLine.name}---</span> <br> 
 												Mean AQI in <strong>${d3.timeFormat('%b %Y')(nearestDataPoint().dateRange[1])}</strong>:<br>
 												<span style="font-size: large;">${nearestDataPoint().averageAqi.toPrecision(3)}</span>
 											</center>`;
-						}}
-						onmouseleave={() => {
-							hoveredDataset = null;
-							hoveredTooltip = null;
-						}}
-						onkeydown={(e) => {
-							if (e.key === 'Enter' || e.key === ' ') {
-								selectedDataset = averageLine.name;
-							}
-						}}
-					/>
-				{/each}
+							}}
+							onmouseleave={() => {
+								hoveredDataset = null;
+								hoveredTooltip = null;
+							}}
+							onkeydown={(e) => {
+								if (e.key === 'Enter' || e.key === ' ') {
+									selectedDataset = averageLine.name;
+								}
+							}}
+						/>
+					{/each}
+				</g>
+
+				<!-- Closest Datapoint -->
+				<g>
+					{#if hoveredDataset && nearestDataPoint}
+						<circle
+							cx={xScale(
+								new Date(
+									(nearestDataPoint().dateRange[0].getTime() +
+										nearestDataPoint().dateRange[1].getTime()) /
+										2
+								)
+							)}
+							cy={yScale(nearestDataPoint().averageAqi)}
+							r={5 + zoomLevel}
+							fill="orange"
+							stroke="red"
+							stroke-width="1"
+							opacity="0.8"
+						/>
+					{/if}
+				</g>
 			</g>
 
-			<!-- Closest Datapoint -->
-			<g>
-				{#if hoveredDataset && nearestDataPoint}
-					<circle
-						cx={xScale(
-							new Date(
-								(nearestDataPoint().dateRange[0].getTime() +
-									nearestDataPoint().dateRange[1].getTime()) /
-									2
-							)
-						)}
-						cy={yScale(nearestDataPoint().averageAqi)}
-						r={5 + zoomLevel}
-						fill="orange"
-						stroke="red"
-						stroke-width="1"
-						opacity="0.8"
-					/>
-				{/if}
-			</g>
-		</g>
+			<!-- Axes and Gridlines -->
+			<g class="x-axis" transform="translate(0, {height - margin.bottom})" bind:this={xAxisRef}></g>
+			<g class="y-axis" transform="translate({margin.left}, 0)" bind:this={yAxisRef}></g>
+			<!-- I could not believe it. I had to add pointer-events: none to the BACKGROUND GRID, it was grabbing the pointer as it is technically rendered on top. -->
+			<g
+				class="y-axis-grid"
+				transform="translate({margin.left}, 0)"
+				bind:this={yAxisGridRef}
+				style="color:black; opacity:0.2; pointer-events: none;"
+			></g>
+		</svg>
 
-		<!-- Axes and Gridlines -->
-		<g class="x-axis" transform="translate(0, {height - margin.bottom})" bind:this={xAxisRef}></g>
-		<g class="y-axis" transform="translate({margin.left}, 0)" bind:this={yAxisRef}></g>
-		<g
-			class="y-axis-grid"
-			transform="translate({margin.left}, 0)"
-			bind:this={yAxisGridRef}
-			style="color:black; opacity:0.2;"
-		></g>
-	</svg>
-
-	<!-- Tooltip -->
-	{#if hoveredTooltip}
-		<div
-			style="
+		<!-- Tooltip -->
+		{#if hoveredTooltip}
+			<div
+				style="
 			position: absolute;
 			left: {mouseX + 10}px;
 			top: {mouseY - 20}px;
 			pointer-events: none;"
-			class="rounded border bg-white/90 px-1 shadow-lg"
-		>
-			{@html hoveredTooltip}
-		</div>
-	{/if}
+				class="rounded border bg-white/90 px-1 shadow-lg"
+			>
+				{@html hoveredTooltip}
+			</div>
+		{/if}
+	</div>
+
+	<!-- Right of Chart -->
+	<div class="mt-5 flex-col gap-4">
+		<div class="text-gray-500">I decided to put my focus on making the chart as interactive and exploratory as possible! I wanted to compare the different locations side by side and facilitate rapidly exploring the data at a more granular level.</div><br />
+		<div class="text-gray-500">Toward this end, I added several interactions and beautifications to the chart! Try zoom, pan, hovering lines and raw data, clicking, etc. Neat that double click zoom is built in on d3!</div>
+	</div>
 </div>
