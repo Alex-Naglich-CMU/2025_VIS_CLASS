@@ -240,7 +240,10 @@
 
 	<div class="flex flex-col gap-2">
 		<!-- Dataset Selector -->
-		<select class="select h-6 w-35 select-md py-0 select-accent" bind:value={selectedDataset}>
+		<select
+			class="select block h-6 w-35 truncate select-md py-0 select-accent"
+			bind:value={selectedDataset}
+		>
 			{#await datasetNames}
 				<!-- promise is pending -->
 				<option disabled selected>Loading datasets...</option>
