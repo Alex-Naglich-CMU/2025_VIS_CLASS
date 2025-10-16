@@ -410,6 +410,7 @@
 							fill="orange"
 							stroke="red"
 							stroke-width="1"
+							style="pointer-events: none;"
 							opacity="0.8"
 						/>
 					{/if}
